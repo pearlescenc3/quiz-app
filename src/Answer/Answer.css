@@ -1,0 +1,18 @@
+#answer {
+    background-color: #fff;
+    border: 2px solid #0094da;
+    margin-bottom: 20px;
+    transition: color .3s ease, border-color .3s ease, transform .3s ease;
+    cursor: pointer;
+    font-size: 20px;
+    font-weight: 600;
+    padding: 14px 65px;
+    align-items: center;
+    float: right;
+    width: 50%;
+    box-sizing: border-box;
+}
+
+.right{
+    border: 2px solid #41ac04;
+}

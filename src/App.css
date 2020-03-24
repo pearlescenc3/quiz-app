@@ -2,37 +2,94 @@
   text-align: center;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
-}
-
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
 .App-header {
-  background-color: #282c34;
+  background-color: #ffffff;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
   font-size: calc(10px + 2vmin);
-  color: white;
 }
 
-.App-link {
-  color: #61dafb;
+#start-btn {
+  border: 2px solid #1e202e;
+  border-radius: 0;
+  background-color: #1e202e;
+  color: #fff;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px 75px;
+  margin: 0 auto;
+  text-transform: uppercase;
+  transition: color .2s ease, background-color .2s ease;
+  cursor: pointer;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+#start-btn:hover {
+  background-color: #fff;
+  color: #13193f;
 }
+
+.submit-btn {
+  border: 2px solid #1e202e;
+  border-radius: 0;
+  background-color: #1e202e;
+  color: #fff;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px 75px;
+  margin: 0 auto;
+  text-transform: uppercase;
+  transition: color .2s ease, background-color .2s ease;
+  cursor: pointer;
+}
+
+.submit-btn:hover {
+  background-color: #fff;
+  color: #13193f;
+}
+
+.restart-btn {
+  border: 2px solid #1e202e;
+  border-radius: 0;
+  background-color: #1e202e;
+  color: #fff;
+  display: inline-block;
+  font-size: 16px;
+  font-weight: 600;
+  padding: 14px 75px;
+  margin: 0 auto;
+  text-transform: uppercase;
+  transition: color .2s ease, background-color .2s ease;
+  cursor: pointer;
+}
+
+.restart-btn:hover {
+  background-color: #fff;
+  color: #13193f;
+}
+
+#questions{
+  background-color: #0094da;
+  font-size: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
+  box-sizing: border-box;
+}
+
+#start-text{
+  font-size: 20px;
+  padding-left: 50px;
+  padding-right: 50px;
+  box-sizing: border-box;
+}
+
+#answers{
+  justify-content: space-between;
+  display: flex;
+  box-sizing: border-box;
+}
+
