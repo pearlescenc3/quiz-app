@@ -1,6 +1,5 @@
 import React, { Component } from 'react';
 
-
 class Question extends Component {
 
     render(){
@@ -8,7 +7,7 @@ class Question extends Component {
         return(
         <div>
             <h4> Question {num + 1}/{total} </h4>
-            <div id="question" dangerouslySetInnerHTML={{ __html: question }} />
+            <div className="question" dangerouslySetInnerHTML={{ __html: question }} />
         </div>
         );
     }
