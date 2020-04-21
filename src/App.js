@@ -1,129 +1,68 @@
-import React, { Fragment, Component } from 'react';
+import React, { Component } from 'react';
 import './App.css';
-import Answer from './Answer/Answer.js';
-import Levels from './General/Levels.js';
-import Text from './General/Text.js';
-import NextButton from './Question/NextButton.js';
-import Question from './Question/Question.js';
-import Restart from './General/Restart.js';
+import StartingPage from './StartPage/StartingPage.js';
+import QuizPage from './QuizPage/QuizPage.js';
+import ScorePage from './ScorePage/ScorePage.js';
 
 class App extends Component {
     state = {
-        pressedStart: false,
-        isFetching: false,
-        showButton: false,
-        num: 0,
         score: 0,
-        data: [],
-        total: 0,
-        isEnded: false,
-        isAnswered: null,
-        isSelected: false
+        data: null,
+        hasEnded: false,
     }
 
-    startQuizHandler = () => {
-        if (this.state.isSelected) {
-            this.setState({
-                pressedStart: true,
-                total: this.state.data.length
-            });
-        }
-    }
-
-    scoreCountHandler = () => {
-        this.setState({ score: this.state.score + 1 });
-    }
-
-    showButtonHandler = () => {
+    quizDataSetter = (quizData) => {
         this.setState({
-            isAnswered: true,
-            showButton: true
+            data: [...quizData]
         });
     }
 
-    selectedOptionHandler = (incomingData) => {
+    scoreSetter = (score) => {
         this.setState({
-            data: [...incomingData],
-            isSelected: true
+            score: score
         });
-        console.log(this.state.data);
-        this.setState({ state: this.state });
-        this.startQuizHandler();
     }
 
-    nextQuestionHandler = () => {
-        this.setState({ num: this.state.num + 1 });
-
-        const { num, total} = this.state;
-        if (num+1 === total) {
-            this.setState({ 
-                isEnded: true,
-                showButton: false
-            });
-        } else {
-            this.setState({
-                isAnswered: false,
-                showButton: false
-            })
-        }
-    }
-
-    restartQuizHandler = () => {
+    endQuiz = (hasEnded) => {
+        console.log(hasEnded);
         this.setState({
-            pressedStart: false,
-            showButton: false,
-            num: 0,
+            hasEnded: hasEnded
+        })
+    }
+
+    restartQuiz = () => {
+        this.setState({
             score: 0,
             data: null,
-            total: 0,
-            isEnded: false,
-            isAnswered: false,
-            isSelected: false
-        });
+            hasEnded: false,
+        })
     }
 
     render() {
-        const { pressedStart, showButton, num, data, 
-                score, total, isEnded, isAnswered } = this.state;
-        
-        let ans, answers, correct_answer, question = null;
-
-        if (pressedStart && (num + 1 <= total)) {
-            question = data[num].question;
-            ans = [...data[num].incorrect_answers]
-            correct_answer = data[num].correct_answer;
-            ans.splice(Math.floor(Math.random() * ans.length + 1), 0, correct_answer);
-            answers = (ans.map((answer, index) => {
-                        return <Answer answer={answer} 
-                                answers={ans} 
-                                correct_answer={correct_answer} 
-                                key={index} id={index}
-                                increaseScore={this.scoreCountHandler} 
-                                showButton={this.showButtonHandler} 
-                                isAnswered={isAnswered} /> })
-                    );
-        }
+        const {data, hasEnded} = this.state;
+        const startPage = data===null && !hasEnded;
+        const quizPage = data!==null && !hasEnded;
+        const scorePage = hasEnded;
 
         return (
             <div className="App">
-                <header className="App-header">
-                    {!pressedStart ?
-                        <Fragment>
-                            <Text/>
-                            <Levels onOptionSelected={this.selectedOptionHandler}/>
-                        </Fragment> :
-                        <Fragment>
-                            <Question question={question} 
-                                num={num} total={total} />
-                            <div> {answers} </div>
-                        </Fragment> 
+                <header className="App-header">   
+                    {startPage &&
+                        <StartingPage 
+                            quizData={this.quizDataSetter}
+                        /> 
                     }
-                    {showButton && <NextButton
-                        onClicked={this.nextQuestionHandler}/>
+                    {quizPage &&
+                        <QuizPage 
+                            quizData={[...this.state.data]} 
+                            hasEnded={this.endQuiz} 
+                            score={this.scoreSetter}
+                        />
                     }
-                    {isEnded && <Restart 
-                        score={score} 
-                        onRestart={this.restartQuizHandler}/>
+                    {scorePage && 
+                        <ScorePage 
+                        score={this.state.score} 
+                        onRestart={this.restartQuiz}/>
                     }
                 </header>
             </div>

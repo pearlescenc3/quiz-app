@@ -1,10 +1,11 @@
-import React, { Component } from 'react';
+import React, { Fragment, Component } from 'react';
 import styled from 'styled-components';
+import ClipLoader from "react-spinners/ClipLoader";
 
 const StyledButton = styled.div`
-    border: 2px solid #1e202e;
+    border: 2px solid #0094da;
     border-radius: 0;
-    background-color: #1e202e;
+    background-color: #0094da;
     color: #fff;
     display: inline-block;
     font-size: 16px;
@@ -14,38 +15,50 @@ const StyledButton = styled.div`
     text-transform: uppercase;
     transition: color .2s ease, background-color .2s ease;
     cursor: pointer;
+    margin-top: 20px;
 
     &:hover {
         background-color: #fff;
-        color: #13193f;
+        color: #0094da;
       }
-    
 `;
 
-class Levels extends Component {
+const StyledDiv = styled.div`
+    font-size: 22px;
+    padding-left: 50px 50px 50px 50px;
+    box-sizing: border-box;
+    margin-top: 20px;
+`;
+
+class DifficultySelection extends Component {
     constructor(props){
         super();
         this.state = {
             selectedOption: 'easy',
             data: null,
-            isFetching: false
+            loading: null
         }
     }
 
-    componentDidMount() {
-        this.setState({ isFetching: true });
+    dataHandler = () => {
+        this.setState({ loading: true });
         const selectedOption = this.state.selectedOption;
         console.log(selectedOption);
         const url = 'https://opentdb.com/api.php?amount=10&category=18&difficulty='+ selectedOption + '&type=multiple';
         fetch(url)
-        .then(res => res.json())
-        .then(json => this.setState({ data: json,
-                                      isFetching: false}));
+            .then(res => res.json())
+            .then(json => this.setState({ data: json,
+                                        loading: false}))
+            .catch((error) => {
+                console.error('Error:', error);
+            });
     }
 
-    dataHandler = () => {
-        const results = [...this.state.data.results]
-        this.props.onOptionSelected(results);
+    componentDidUpdate = (prevState) => {
+        if (this.state.loading === false){
+            const results = [...this.state.data.results];
+            this.props.onOptionSelected(results);
+        };
     }
 
     optionChangeHandler = (event) => {
@@ -56,8 +69,9 @@ class Levels extends Component {
 
     render() {
         return (
-            <div>
-                <div className="radio">
+            <StyledDiv>
+                Please select the level of questions:
+                <div>
                     <label>
                         <input 
                             type="radio" 
@@ -67,7 +81,7 @@ class Levels extends Component {
                         Easy
                     </label>
                 </div>
-                <div className="radio">
+                <div>
                     <label>
                         <input 
                             type="radio" 
@@ -77,7 +91,7 @@ class Levels extends Component {
                         Medium
                     </label>
                 </div>
-                <div className="radio">
+                <div>
                     <label>
                         <input
                             type="radio"
@@ -87,14 +101,22 @@ class Levels extends Component {
                         Hard
                     </label>
                 </div>
-
-                <StyledButton
-                        onClick={this.dataHandler}> 
-                        Start the quiz 
-                </StyledButton>
-            </div>
+                <Fragment>
+                    <ClipLoader
+                        sizeUnit={"px"}
+                        size={50}
+                        color={'#0094da'}
+                        loading={this.state.loading}
+                    />
+                    {this.state.loading !== true && 
+                    <StyledButton
+                            onClick={this.dataHandler}> 
+                            Start the quiz 
+                    </StyledButton>}
+                </Fragment>
+            </StyledDiv>
         );
     }
 }
 
-export default Levels;
+export default DifficultySelection;
