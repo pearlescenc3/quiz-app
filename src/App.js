@@ -24,7 +24,6 @@ class App extends Component {
     }
 
     endQuiz = (hasEnded) => {
-        console.log(hasEnded);
         this.setState({
             hasEnded: hasEnded
         })
@@ -39,7 +38,7 @@ class App extends Component {
     }
 
     render() {
-        const {data, hasEnded} = this.state;
+        const {data, hasEnded, score} = this.state;
         const startPage = data===null && !hasEnded;
         const quizPage = data!==null && !hasEnded;
         const scorePage = hasEnded;
@@ -54,15 +53,16 @@ class App extends Component {
                     }
                     {quizPage &&
                         <QuizPage 
-                            quizData={[...this.state.data]} 
-                            hasEnded={this.endQuiz} 
+                            quizData={[...data]} 
+                            onFinish={this.endQuiz} 
                             score={this.scoreSetter}
                         />
                     }
                     {scorePage && 
                         <ScorePage 
-                        score={this.state.score} 
-                        onRestart={this.restartQuiz}/>
+                            score={score} 
+                            onRestart={this.restartQuiz}
+                        />
                     }
                 </header>
             </div>

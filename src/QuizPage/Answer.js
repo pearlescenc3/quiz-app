@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import htmlDecode from './HtmlDecode';
 import styled from 'styled-components';
 
 const StyledAnswer = styled.div`
@@ -13,11 +14,6 @@ const StyledAnswer = styled.div`
     flex-basis: 50%;
 `;
 
-const htmlDecode = (input) => {
-    return input.replace(/&#039;/g, "'")
-                .replace(/&quot;/g, "\"");
-}
-
 class Answer extends Component {
     constructor(props) {
         super(props);
@@ -25,29 +21,30 @@ class Answer extends Component {
             color: "#0094da",
         }
     }
-    
-    checkAnswer = (event, answers, correct_answer) => {
-        const {increaseScore, showButton, isAnswered} = this.props;
-        const correctIndex = answers.indexOf(correct_answer);
-        if (!isAnswered){
-            let answer = Number(event.currentTarget.dataset.id);
-            if (answer === correctIndex) {
-                increaseScore();       
-                this.setState({color: "#41ac04"});
-            } else {
-                this.setState({color: "#ff0000"}) ;
-            }
-            showButton();
-        } 
+
+    checkAnswer = (event, answers, correctAnswer) => {
+        const {increaseScore, showButton} = this.props;
+        const correctIndex = answers.indexOf(correctAnswer);
+
+        let answer = Number(event.currentTarget.dataset.id);
+        if (answer === correctIndex) {
+            increaseScore();       
+            this.setState({color: "#41ac04"});
+        } else {
+            this.setState({color: "#ff0000"}) ;
+        }
+        showButton();
     }
 
     render() {
-        const {answer, all_answers, correct_answer, id} = this.props;
+        const { answer, index, allAnswers, correctAnswer } = this.props;
 
         return (
-            <StyledAnswer borderColor={this.state.color}
-                onClick={(event) => this.checkAnswer(event, all_answers, correct_answer)} 
-                data-id={String(id)}>
+            <StyledAnswer 
+                borderColor={this.state.color}
+                onClick={(event) => this.checkAnswer(event, allAnswers, correctAnswer)}
+                data-id={String(index)}
+            >    
                 {htmlDecode(answer)} 
             </StyledAnswer>
         );
