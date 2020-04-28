@@ -22,12 +22,10 @@ class Answer extends Component {
     };
   }
 
-  checkAnswer = (event, answers, correctAnswer) => {
+  checkAnswer = (event, isCorrect) => {
     const { increaseScore, showButton } = this.props;
-    const correctIndex = answers.indexOf(correctAnswer);
 
-    let answer = Number(event.currentTarget.dataset.id);
-    if (answer === correctIndex) {
+    if (isCorrect) {
       increaseScore();
       this.setState({ color: "#41ac04" });
     } else {
@@ -37,12 +35,12 @@ class Answer extends Component {
   };
 
   render() {
-    const { answer, index, allAnswers, correctAnswer } = this.props;
+    const { answer, index, isCorrect } = this.props;
 
     return (
       <StyledAnswer
         borderColor={this.state.color}
-        onClick={(event) => this.checkAnswer(event, allAnswers, correctAnswer)}
+        onClick={(event) => this.checkAnswer(event, isCorrect)}
         data-id={String(index)}
       >
         {htmlDecode(answer)}

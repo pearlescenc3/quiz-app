@@ -97,8 +97,7 @@ class QuizPage extends Component {
                 key={answer}
                 index={index}
                 answer={answer}
-                allAnswers={[...answers]}
-                correctAnswer={currentQuestion.correct_answer}
+                isCorrect={answer === currentQuestion.correct_answer}
                 increaseScore={this.scoreCountHandler}
                 showButton={this.showButtonHandler}
               />
