@@ -8,12 +8,12 @@ const StyledDiv = styled.div`
   box-sizing: border-box;
 `;
 
-const StartingPage = (props) => {
+const StartingPage = ({ setQuizData }) => {
   return (
     <Fragment>
       <StyledDiv>Welcome to quiz on Computer Science topic!</StyledDiv>
       <DifficultySelection
-        onOptionSelected={(incomingData) => props.quizData([...incomingData])}
+        onOptionSelected={(incomingData) => setQuizData([...incomingData])}
       />
     </Fragment>
   );

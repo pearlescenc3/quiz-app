@@ -67,7 +67,7 @@ class QuizPage extends Component {
   };
 
   scoreCountHandler = () => {
-    this.props.score(this.state.score + 1);
+    this.props.setScore(this.state.score + 1);
     this.setState({
       score: this.state.score + 1,
     });

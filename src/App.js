@@ -46,12 +46,12 @@ class App extends Component {
     return (
       <div className="App">
         <header className="App-header">
-          {startPage && <StartingPage quizData={this.quizDataSetter} />}
+          {startPage && <StartingPage setQuizData={this.quizDataSetter} />}
           {quizPage && (
             <QuizPage
               quizData={[...data]}
               onFinish={this.endQuiz}
-              score={this.scoreSetter}
+              setScore={this.scoreSetter}
             />
           )}
           {scorePage && (
